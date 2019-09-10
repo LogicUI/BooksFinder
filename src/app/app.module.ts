@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SearchInputComponent } from './search-input/search-input.component';
+import { BookCardsComponent } from './book-card/book-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchInputComponent
+    SearchInputComponent,
+    BookCardsComponent
   ],
   imports: [
     BrowserModule,
