@@ -1,0 +1,13 @@
+<form (submit)="onFormSubmit($event)">
+  <div class="input-group">
+    <input
+      class="input"
+      type="text"
+      (input)="onInputChange($event.target.value)"
+      [value]="inputData"
+    />
+    <div class="input-group-append">
+      <input class="btn btn-primary" type="submit" value="Search" />
+    </div>
+  </div>
+</form>
