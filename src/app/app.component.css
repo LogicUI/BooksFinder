@@ -1,0 +1,13 @@
+.books {
+  display: grid;
+  grid-gap: 10px;
+  margin-top: 2rem;
+  justify-items: center;
+  grid-template-columns: 1fr;
+}
+
+@media only screen and (min-width: 768px) {
+  .books {
+    grid-template-columns: 1fr 1fr;
+  }
+}
