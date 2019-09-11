@@ -1,7 +1,11 @@
-import { Injectable } from "@angular/core";
+import {
+  Injectable,
+  ɵCompiler_compileModuleSync__POST_R3__
+} from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { map, catchError } from "rxjs/operators";
 import { Book } from "../model/book";
+import { Observable, of, throwError } from "rxjs";
 @Injectable({
   providedIn: "root"
 })
@@ -18,28 +22,38 @@ export class BooksService {
       .set("key", this.apiKey);
   }
 
-  getBooks(query: string) {
+  getBooks(query: string): Observable<Book[]> {
     const params = this.setBooksParams(query);
+
     return this.http.get<Book[]>(this.baseUrl, { params }).pipe(
-      map(books =>
-        books["items"].map(volume => {
-          const {
-            volumeInfo: {
+      map(books => {
+        if (books["items"]) {
+          return books["items"].map(volume => {
+            const {
+              volumeInfo: {
+                title,
+                averageRating,
+                publisher,
+                imageLinks: { thumbnail }
+              }
+            } = volume;
+            const newThumbnail = thumbnail.replace(/zoom=\d/, /zoom=2/);
+            console.log(thumbnail);
+            const book = {
               title,
-              averageRating,
+              rating: averageRating,
               publisher,
-              imageLinks: { thumbnail }
-            }
-          } = volume;
-          const book = {
-            title,
-            rating: averageRating,
-            publisher,
-            image: thumbnail
-          };
-          return book;
-        })
-      )
+              image: newThumbnail
+            };
+            return book;
+          });
+        } else {
+          throw new Error("Books not found");
+        }
+      }),
+      catchError(err => {
+        return throwError(err.message);
+      })
     );
   }
 }

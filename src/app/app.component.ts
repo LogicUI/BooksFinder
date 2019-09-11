@@ -9,11 +9,21 @@ import { Book } from "./model/book";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  books$: Observable<Book[]>;
+  books: Book[];
+  err: string;
 
   constructor(private bookService: BooksService) {}
 
   onBookSearch(query: string) {
-    this.books$ = this.bookService.getBooks(query);
+    this.bookService.getBooks(query).subscribe(
+      res => {
+        this.books = res;
+        this.err = "";
+      },
+      err => {
+        this.books = [];
+        this.err = err;
+      }
+    );
   }
 }
