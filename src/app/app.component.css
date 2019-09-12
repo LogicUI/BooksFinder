@@ -1,9 +1,14 @@
 .books {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   grid-gap: 20px;
 }
 
-app-book-card:nth-child(odd) {
-  justify-self: end;
+@media only screen and (min-width: 768px) {
+  .books {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  app-book-card:nth-child(odd) {
+    justify-self: end;
+  }
 }
