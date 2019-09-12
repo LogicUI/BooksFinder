@@ -1,6 +1,38 @@
 .bookCard {
-  box-shadow: 4px 3px 6px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 16px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.14),
+    0 4px 8px -1px rgba(0, 0, 0, 0.12);
   margin: 50px 0;
   width: 500px;
-  height: 300px;
+  height: 400px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.bookCard__img {
+  position: absolute;
+  top: -20px;
+  height: 250px;
+  max-width: 200px;
+  left: 20px;
+  box-shadow: 0 1px 16px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.14),
+    0 4px 8px -1px rgba(0, 0, 0, 0.12);
+}
+
+.bookCardDetails {
+  font-family: "Roboto", sans-serif;
+  grid-column-start: 2;
+  padding: 0.5rem;
+}
+.bookCardDetails__heading {
+  font-family: "Oswald", sans-serif;
+  font-weight: bolder;
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.bookCardDetails__details {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  font-family: "Lato", sans-serif;
 }

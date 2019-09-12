@@ -19,7 +19,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": false,
-            "assets": ["src/favicon.ico", "src/assets", "src/_redirects"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/_redirects"
+            ],
             "styles": [
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
@@ -86,8 +90,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
             "scripts": []
           }
         },
@@ -99,7 +108,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {
@@ -112,6 +123,14 @@
             "production": {
               "devServerTarget": "GoogleBooks:serve:production"
             }
+          }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/GoogleBooks",
+            "netlifyToken": "51b6e2065e468446b10bf33c926957c68191dbc020d8e0852de3a983f1608c43",
+            "siteId": "2250c4e9-e732-484e-bd7a-6a29140a170c"
           }
         }
       }

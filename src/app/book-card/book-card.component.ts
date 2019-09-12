@@ -9,7 +9,12 @@ export class BookCardsComponent implements OnInit {
   @Input()
   book: Book;
 
+  author: Array<String>;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.author = this.book.authors;
+    console.log(this.book);
+  }
 }

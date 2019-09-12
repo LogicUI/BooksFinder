@@ -5,7 +5,7 @@ import {
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
 import { Book } from "../model/book";
-import { Observable, of, throwError } from "rxjs";
+import { Observable, throwError } from "rxjs";
 @Injectable({
   providedIn: "root"
 })
@@ -31,16 +31,19 @@ export class BooksService {
           return books["items"].map(volume => {
             const {
               volumeInfo: {
+                authors,
                 title,
                 averageRating,
                 publisher,
+                previewLink,
                 imageLinks: { thumbnail }
               }
             } = volume;
             const newThumbnail = thumbnail.replace(/zoom=\d/, /zoom=2/);
-            console.log(thumbnail);
             const book = {
               title,
+              authors,
+              previewLink,
               rating: averageRating,
               publisher,
               image: newThumbnail

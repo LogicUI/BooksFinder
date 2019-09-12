@@ -1,16 +1,20 @@
-<!-- <div class="card">
-  <img [src]="book.image" class="card-img-top" alt="this is a card iamge" />
-  <div class="card-body">
-    <h1>{{ book.title }}</h1>
-    <h2>By: {{ book.author }}</h2>
-    <h3>published by {{ book.publisher }}</h3>
-  </div>
-</div> -->
 <div class="bookCard">
-  <img
-    [src]="book.image"
-    alt="this is a card iamge"
-    width="250px"
-    height="250px"
-  />
+  <img [src]="book.image" alt="this is a card iamge" class="bookCard__img" />
+  <div class="bookCardDetails">
+    <h1 class="bookCardDetails__heading">{{ book.title }}</h1>
+    <ng-container *ngIf="author; else noAuthor">
+      <h1 class="bookCardDetails__details">By: {{ author }}</h1>
+      <ng-template #noAuthor>
+        <h1 class="bookCardDetails__details">No Authors Found</h1>
+      </ng-template>
+    </ng-container>
+    <h1 class="bookCardDetails__details">Published By: {{ book.publisher }}</h1>
+    <a
+      [href]="book.previewLink"
+      target="_blank"
+      type="button"
+      class="btn btn-success rounded-pill bookCardDetails__button"
+      >See This Book</a
+    >
+  </div>
 </div>
