@@ -1,4 +1,9 @@
 .input {
-  border: 1px solid black;
-  width: 400px;
+  width: 200px;
+}
+
+@media only screen and (min-width: 768px) {
+  .input {
+    width: 400px;
+  }
 }

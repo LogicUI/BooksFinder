@@ -7,16 +7,24 @@
       (onBookSearched)="onBookSearch($event)"
     ></app-search-input>
   </header>
+
   <div class="books" *ngIf="books; else elseBlock">
     <app-book-card *ngFor="let bookDetail of books" [book]="bookDetail">
     </app-book-card>
   </div>
-  <div *ngIf="err">
+  <ng-container *ngIf="err">
     <h1 class="text-center mt-3">
-      Your Search Returned No Results
+      {{ err }}
     </h1>
-  </div>
+  </ng-container>
+  <ng-container *ngIf="isLoading">
+    <div class=" d-flex justify-content-center align-items-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </ng-container>
   <ng-template #elseBlock>
-    <h1 class="text-center mt-3">Search A Book To Start</h1>
-  </ng-template>
+    <h1 class="text-center mt-3">Search A Book To Start</h1> </ng-template
+  >
 </div>

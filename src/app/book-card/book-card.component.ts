@@ -15,6 +15,5 @@ export class BookCardsComponent implements OnInit {
 
   ngOnInit() {
     this.author = this.book.authors;
-    console.log(this.book);
   }
 }

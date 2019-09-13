@@ -39,19 +39,18 @@ export class BooksService {
                 imageLinks: { thumbnail }
               }
             } = volume;
-            const newThumbnail = thumbnail.replace(/zoom=\d/, /zoom=2/);
             const book = {
               title,
               authors,
               previewLink,
               rating: averageRating,
               publisher,
-              image: newThumbnail
+              image: thumbnail
             };
             return book;
           });
         } else {
-          throw new Error("Books not found");
+          throw new Error("Your Search Returned No Results");
         }
       }),
       catchError(err => {

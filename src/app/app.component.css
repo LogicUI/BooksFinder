@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
+  justify-items: center;
 }
 
 @media only screen and (min-width: 768px) {
@@ -10,5 +11,8 @@
   }
   app-book-card:nth-child(odd) {
     justify-self: end;
+  }
+  app-book-card:nth-child(even) {
+    justify-self: start;
   }
 }

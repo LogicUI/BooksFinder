@@ -1,8 +1,8 @@
-<div class="bookCard" *ngIf="book">
+<div class="bookCard">
   <img [src]="book.image" alt="this is a card iamge" class="bookCard__img" />
   <div class="bookCardDetails">
     <h1 class="bookCardDetails__heading">{{ book.title }}</h1>
-    <ng-container *ngIf="author; else noAuthor">
+    <ng-container *ngIf="author">
       <h1 class="bookCardDetails__details">By: {{ author }}</h1>
       <ng-template #noAuthor>
         <h1 class="bookCardDetails__details">No Authors Found</h1>

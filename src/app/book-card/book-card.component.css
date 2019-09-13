@@ -2,27 +2,53 @@
   box-shadow: 0 1px 16px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.14),
     0 4px 8px -1px rgba(0, 0, 0, 0.12);
   margin: 50px 0;
-  width: 500px;
-  height: 400px;
-  position: relative;
+  width: 300px;
+  min-height: 300px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+  position: relative;
+}
+
+@media only screen and (min-width: 400px) {
+  .bookCard {
+    width: 400px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .bookCard {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: unset;
+    width: 500px;
+    min-height: 400px;
+  }
+  .bookCard__img {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+  }
+  .bookCardDetails {
+    grid-column-start: 2;
+    text-align: unset;
+  }
 }
 
 .bookCard__img {
-  position: absolute;
-  top: -20px;
   height: 250px;
   max-width: 200px;
-  left: 20px;
+  position: absolute;
+  top: -20px;
+  justify-self: center;
   box-shadow: 0 1px 16px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.14),
     0 4px 8px -1px rgba(0, 0, 0, 0.12);
 }
 
 .bookCardDetails {
   font-family: "Roboto", sans-serif;
-  grid-column-start: 2;
+  grid-row-start: 2;
   padding: 0.5rem;
+  text-align: center;
 }
 .bookCardDetails__heading {
   font-family: "Oswald", sans-serif;
@@ -35,4 +61,8 @@
   font-size: 1.5rem;
   margin: 1rem 0;
   font-family: "Lato", sans-serif;
+}
+
+.bookCardDetails__button {
+  margin: 1rem 0;
 }
