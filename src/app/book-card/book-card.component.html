@@ -1,4 +1,4 @@
-<div class="bookCard">
+<div class="bookCard" *ngIf="book">
   <img [src]="book.image" alt="this is a card iamge" class="bookCard__img" />
   <div class="bookCardDetails">
     <h1 class="bookCardDetails__heading">{{ book.title }}</h1>
