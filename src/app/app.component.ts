@@ -1,40 +1,46 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { BooksService } from "./services/books.service";
-import { Observable } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { Book } from "./model/book";
+
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+  booksObs$;
   books: Book[];
   err: string;
   isLoading: boolean = false;
-
   constructor(private bookService: BooksService) {}
 
   onBookSearch(query: string) {
     if (query === "") {
       this.err = "You Are Not allowed to enter a empty string";
     } else {
-      this.triggerLoader();
       this.handleServiceRequest(query);
     }
   }
 
+  ngOnInit() {
+    this.handleServiceRequest("harry");
+  }
+
+  ngOnDestroy() {
+    this.booksObs$.unsubscribe();
+  }
+
   private handleServiceRequest(query: string) {
-    this.bookService.getBooks(query).subscribe(
-      res => {
-        this.books = res;
+    this.booksObs$ = this.bookService.getBooksParams(query).subscribe(
+      booksArray => {
+        this.books = booksArray;
         this.err = "";
-        this.triggerLoader();
       },
-      err => {
+      error => {
         this.books = [];
-        this.err = err;
-        this.triggerLoader();
+        this.err = error;
       }
     );
   }

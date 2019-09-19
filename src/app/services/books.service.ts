@@ -1,11 +1,9 @@
-import {
-  Injectable,
-  ɵCompiler_compileModuleSync__POST_R3__
-} from "@angular/core";
+import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { map, catchError } from "rxjs/operators";
 import { Book } from "../model/book";
 import { Observable, throwError } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+
 @Injectable({
   providedIn: "root"
 })
@@ -22,36 +20,43 @@ export class BooksService {
       .set("key", this.apiKey);
   }
 
-  getBooks(query: string): Observable<Book[]> {
-    const params = this.setBooksParams(query);
+  loadInitial() {
+    return this.searchForBooks("harry");
+  }
 
-    return this.http.get<Book[]>(this.baseUrl, { params }).pipe(
+  searchForBooks(query: string) {
+    const params = this.setBooksParams(query);
+  }
+
+  getBooksParams(query: string): Observable<Book[]> {
+    const params = this.setBooksParams(query);
+    return this.http.get<any>(this.baseUrl, { params }).pipe(
       map(books => {
-        if (books["items"]) {
-          return books["items"].map(volume => {
-            const {
-              volumeInfo: {
-                authors,
-                title,
-                averageRating,
-                publisher,
-                previewLink,
-                imageLinks: { thumbnail }
-              }
-            } = volume;
-            const book = {
-              title,
-              authors,
-              previewLink,
-              rating: averageRating,
-              publisher,
-              image: thumbnail
-            };
-            return book;
-          });
-        } else {
+        if (!books["items"]) {
           throw new Error("Your Search Returned No Results");
         }
+        return books["items"];
+      }),
+      map(bookItems => {
+        return bookItems.map(book => {
+          const {
+            volumeInfo: {
+              authors,
+              title,
+              publisher,
+              previewLink,
+              imageLinks: { thumbnail = "../assets/image/noImage.jpg" } = ""
+            }
+          } = book;
+          const newBook = {
+            authors,
+            title,
+            publisher,
+            previewLink,
+            image: thumbnail
+          };
+          return newBook;
+        });
       }),
       catchError(err => {
         return throwError(err.message);
