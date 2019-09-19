@@ -16,3 +16,8 @@
     justify-self: start;
   }
 }
+
+
+.spinner-border{
+  width: 5rem; height: 5rem;
+}

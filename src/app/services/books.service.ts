@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Book } from "../model/book";
 import { Observable, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, delay } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -31,6 +31,7 @@ export class BooksService {
   getBooksParams(query: string): Observable<Book[]> {
     const params = this.setBooksParams(query);
     return this.http.get<any>(this.baseUrl, { params }).pipe(
+      delay(50),
       map(books => {
         if (!books["items"]) {
           throw new Error("Your Search Returned No Results");
