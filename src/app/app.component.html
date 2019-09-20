@@ -2,22 +2,23 @@
   <header
     class="d-flex justify-content-center align-items-center flex-column mt-3"
   >
-    <h1>Books Finder</h1>
+    <h1 class="appHeading">Books Finder</h1>
     <app-search-input
       (onBookSearched)="onBookSearch($event)"
     ></app-search-input>
   </header>
   <div class="books" *ngIf="books">
-    <app-book-card *ngFor="let bookDetail of books" [book]="bookDetail">
+    <app-book-card
+      *ngFor="let bookDetail of books; let i = index"
+      [book]="bookDetail"
+      [index]="i"
+    >
     </app-book-card>
   </div>
 
   <ng-container *ngIf="isLoading">
     <div class=" d-flex justify-content-center align-items-center mt-3">
-      <div
-        class="spinner-border"
-        role="status"
-      >
+      <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
@@ -43,7 +44,9 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-center" id="exampleModalLabel">Error</h5>
+          <h5 class="modal-title text-center" id="exampleModalLabel">
+            Invalid Query
+          </h5>
           <button
             type="button"
             class="close"

@@ -2,8 +2,17 @@
   width: 200px;
 }
 
+.input::placeholder {
+  font-size: 14px;
+  padding-left: 0.5rem;
+}
+
 @media only screen and (min-width: 768px) {
   .input {
     width: 400px;
+  }
+
+  .input::placeholder {
+    font-size: 16px;
   }
 }

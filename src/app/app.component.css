@@ -5,19 +5,18 @@
   justify-items: center;
 }
 
+.appHeading {
+  font-family: "Lora", serif;
+  font-size: 3rem;
+}
+
 @media only screen and (min-width: 768px) {
   .books {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  app-book-card:nth-child(odd) {
-    justify-self: end;
-  }
-  app-book-card:nth-child(even) {
-    justify-self: start;
+    grid-template-columns: repeat(auto-fit, minMax(500px, 1fr));
   }
 }
 
-
-.spinner-border{
-  width: 5rem; height: 5rem;
+.spinner-border {
+  width: 5rem;
+  height: 5rem;
 }

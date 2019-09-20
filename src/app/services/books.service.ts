@@ -16,7 +16,7 @@ export class BooksService {
   private setBooksParams(query: string) {
     return new HttpParams()
       .set("q", query)
-      .set("maxResults", "10")
+      .set("maxResults", "12")
       .set("key", this.apiKey);
   }
 
@@ -46,6 +46,7 @@ export class BooksService {
               title,
               publisher,
               previewLink,
+              description,
               imageLinks: { thumbnail = "../assets/image/noImage.jpg" } = ""
             }
           } = book;
@@ -54,6 +55,7 @@ export class BooksService {
             title,
             publisher,
             previewLink,
+            description,
             image: thumbnail
           };
           return newBook;

@@ -1,11 +1,11 @@
 <form (submit)="onFormSubmit($event)">
-  <div class="input-group">
+  <div class="input-group input-group-lg">
     <input
       class="input"
       type="text"
       (input)="onInputChange($event.target.value)"
       [value]="inputData"
-      placeholder="Enter Your Book Search Query Here"
+      placeholder="Enter a book title"
     />
     <div class="input-group-append">
       <input class="btn btn-primary" type="submit" value="Search" />

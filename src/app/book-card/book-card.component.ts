@@ -1,19 +1,24 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import { Book } from "../model/book";
 @Component({
   selector: "app-book-card",
   templateUrl: "./book-card.component.html",
   styleUrls: ["./book-card.component.css"]
 })
-export class BookCardsComponent implements OnInit {
+export class BookCardsComponent implements OnChanges {
   @Input()
   book: Book;
 
-  author: Array<String>;
+  @Input()
+  index;
 
   constructor() {}
 
-  ngOnInit() {
-    this.author = this.book.authors;
-  }
+  ngOnChanges() {}
 }

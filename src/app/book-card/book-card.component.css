@@ -45,24 +45,63 @@
 }
 
 .bookCardDetails {
-  font-family: "Roboto", sans-serif;
   grid-row-start: 2;
   padding: 0.5rem;
   text-align: center;
 }
 .bookCardDetails__heading {
-  font-family: "Oswald", sans-serif;
+  font-family: "Lora", serif;
+  text-transform: uppercase;
   font-weight: bolder;
   margin: 1rem 0;
   font-size: 2rem;
 }
 
 .bookCardDetails__details {
+  font-family: "Merriweather", serif;
   font-size: 1.5rem;
   margin: 1rem 0;
-  font-family: "Lato", sans-serif;
 }
 
 .bookCardDetails__button {
   margin: 1rem 0;
+  padding: 1rem;
+  font-family: "Merriweather", serif;
+  border: 0;
+  border-radius: 16px;
+  cursor: pointer;
+  color: white;
+  background: crimson;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+.bookCardDetails__button:hover {
+  background-color: #f54d70;
+  box-shadow: 0px 15px 2x rgba(0, 0, 0, 0.4);
+  transform: translateY(-7px);
+}
+
+.bookCardDetails__button:focus {
+  outline: none;
+}
+
+.modal-body > * {
+  margin: 1rem 0;
+}
+
+.modal-body__image {
+  width: 300px;
+  height: 300px;
+}
+.modal-body__title {
+  font-family: "Lora", serif;
+  font-weight: 800;
+}
+
+.modal-body__description {
+  font-family: "Merriweather", serif;
+  font-size: 19px;
 }

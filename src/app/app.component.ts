@@ -24,7 +24,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onBookSearch(query: string) {
     if (query === "") {
-      this.err = "You Are Not allowed to enter a empty string";
+      this.modal.nativeElement.click();
+      this.err = "Your Search query is blank";
     } else {
       this.triggerLoader();
 
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.triggerLoader();
-    this.handleServiceRequest("harry");
+    this.handleServiceRequest("javascript");
   }
 
   ngOnDestroy() {
