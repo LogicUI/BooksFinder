@@ -9,6 +9,7 @@ import {
 import { BooksService } from "./services/books.service";
 import { Observable, of, throwError } from "rxjs";
 import { Book } from "./model/book";
+import { BookPaginationComponent } from "./book-pagination/book-pagination.component";
 
 @Component({
   selector: "app-root",
@@ -19,8 +20,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   booksObs$;
   books: Book[];
   err: string;
+
   isLoading: boolean = false;
+  savedQuery: string = "javascript";
+  startIndex: Number = 0;
+
   constructor(private bookService: BooksService) {}
+
+  @ViewChild(BookPaginationComponent, { static: false })
+  bookPaginate;
+
+  onPaginateClick(event) {
+    const number = event.target.textContent;
+    event.target.parentNode.classList.add("active");
+    this.startIndex = number * 12 - 12;
+    this.triggerLoader();
+    this.handleServiceRequest(this.savedQuery, this.startIndex.toString());
+  }
 
   onBookSearch(query: string) {
     if (query === "") {
@@ -28,17 +44,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.err = "Your Search query is blank";
     } else {
       this.triggerLoader();
-
-      this.handleServiceRequest(query);
+      this.savedQuery = query;
+      this.startIndex = 0;
+      this.bookPaginate.resetPaginate();
+      this.handleServiceRequest(query, this.startIndex.toString());
     }
   }
 
-  @ViewChild("modal", { static: true, read: ElementRef })
+  @ViewChild("modal", { static: false })
   modal: ElementRef;
 
   ngOnInit() {
     this.triggerLoader();
-    this.handleServiceRequest("javascript");
+    this.handleServiceRequest(this.savedQuery, this.startIndex.toString());
   }
 
   ngOnDestroy() {
@@ -47,22 +65,25 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {}
 
-  private handleServiceRequest(query: string) {
+  private handleServiceRequest(query: string, startIndex: string) {
     const prev = this.books;
+
     this.books = [];
-    this.booksObs$ = this.bookService.getBooksParams(query).subscribe(
-      booksArray => {
-        this.books = booksArray;
-        this.err = "";
-        this.triggerLoader();
-      },
-      error => {
-        this.books = prev;
-        this.modal.nativeElement.click();
-        this.err = error;
-        this.triggerLoader();
-      }
-    );
+    this.booksObs$ = this.bookService
+      .getBooksParams(query, startIndex)
+      .subscribe(
+        booksArray => {
+          this.books = booksArray;
+          this.err = "";
+          this.triggerLoader();
+        },
+        error => {
+          this.books = prev;
+          this.modal.nativeElement.click();
+          this.err = error;
+          this.triggerLoader();
+        }
+      );
   }
 
   triggerLoader() {

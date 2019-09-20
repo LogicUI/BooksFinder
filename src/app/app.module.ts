@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { BookCardsComponent } from './book-card/book-card.component';
+import { BookPaginationComponent } from './book-pagination/book-pagination.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchInputComponent,
-    BookCardsComponent
+    BookCardsComponent,
+    BookPaginationComponent
   ],
   imports: [
     BrowserModule,

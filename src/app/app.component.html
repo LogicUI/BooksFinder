@@ -7,6 +7,8 @@
       (onBookSearched)="onBookSearch($event)"
     ></app-search-input>
   </header>
+  <app-book-pagination (onPaginateClick)="onPaginateClick($event)">
+  </app-book-pagination>
   <div class="books" *ngIf="books">
     <app-book-card
       *ngFor="let bookDetail of books; let i = index"
