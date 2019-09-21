@@ -13,16 +13,15 @@ export class BooksService {
 
   constructor(private http: HttpClient) {}
 
-  private setBooksParams(query: string, startIndex: string) {
+  private setBooksParams(query: string) {
     return new HttpParams()
       .set("q", query)
-      .set("maxResults", "12")
-      .set("startIndex", startIndex)
+      .set("maxResults", "40")
       .set("key", this.apiKey);
   }
 
-  getBooksParams(query: string, startIndex: string): Observable<Book[]> {
-    const params = this.setBooksParams(query, startIndex);
+  getBooksParams(query: string): Observable<Book[]> {
+    const params = this.setBooksParams(query);
     return this.http.get<any>(this.baseUrl, { params }).pipe(
       delay(50),
       map(books => {

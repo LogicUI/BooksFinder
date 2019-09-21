@@ -3,7 +3,11 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ViewChild
+  ViewChild,
+  Input,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef
 } from "@angular/core";
 
 @Component({
@@ -16,25 +20,34 @@ export class BookPaginationComponent implements OnInit {
 
   ngOnInit() {}
 
-  @ViewChild("paginateNumbers", { static: false })
-  paginateNumbers: any;
+  @ViewChildren("paginateNumbers")
+  paginateNumbers;
+
+  @Input()
+  paginatePage: number[];
 
   @Output()
   onPaginateClick = new EventEmitter();
 
+  removeCurrentActive() {
+    const lists: any = Array.from(this.paginateNumbers);
+
+    const find = lists.find(element =>
+      element.nativeElement.classList.contains("active")
+    );
+    if (find) {
+      find.nativeElement.classList.remove("active");
+    }
+    return lists;
+  }
+
   handleOnClick(event) {
-    const lists: any = Array.from(this.paginateNumbers.nativeElement.children);
-
-    const find = lists.find(value => value.classList.contains("active"));
-    find.classList.remove("active");
-
+    this.removeCurrentActive();
     this.onPaginateClick.emit(event);
   }
 
   public resetPaginate() {
-    const lists: any = Array.from(this.paginateNumbers.nativeElement.children);
-    const find = lists.find(value => value.classList.contains("active"));
-    find.classList.remove("active");
-    lists[0].classList.add("active");
+    const lists = this.removeCurrentActive();
+    lists[0].nativeElement.classList.add("active");
   }
 }

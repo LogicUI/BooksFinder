@@ -3,11 +3,9 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
-  ElementRef,
-  AfterViewInit
+  ElementRef
 } from "@angular/core";
 import { BooksService } from "./services/books.service";
-import { Observable, of, throwError } from "rxjs";
 import { Book } from "./model/book";
 import { BookPaginationComponent } from "./book-pagination/book-pagination.component";
 
@@ -16,26 +14,45 @@ import { BookPaginationComponent } from "./book-pagination/book-pagination.compo
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy {
   booksObs$;
-  books: Book[];
-  err: string;
 
+  books: Book[];
+  paginateBook: Book[];
+  paginatePageNumber: number[];
+
+  err: string;
   isLoading: boolean = false;
-  savedQuery: string = "javascript";
-  startIndex: Number = 0;
 
   constructor(private bookService: BooksService) {}
 
   @ViewChild(BookPaginationComponent, { static: false })
   bookPaginate;
 
-  onPaginateClick(event) {
-    const number = event.target.textContent;
-    event.target.parentNode.classList.add("active");
-    this.startIndex = number * 12 - 12;
+  @ViewChild("modal", { static: false })
+  modal: ElementRef;
+
+  ngOnInit() {
     this.triggerLoader();
-    this.handleServiceRequest(this.savedQuery, this.startIndex.toString());
+    this.handleServiceRequest("javascript");
+  }
+
+  ngOnDestroy() {
+    this.booksObs$.unsubscribe();
+  }
+
+  onPaginateClick(event) {
+    const pageNumber = event.target.textContent;
+    event.target.parentNode.classList.add("active");
+    this.paginateBookPages(pageNumber, 12);
+  }
+
+  paginateBookPages(pageNumber, maxResult) {
+    const lastIndex = pageNumber * maxResult;
+    const firstIndex = lastIndex - maxResult;
+    const pages = Math.ceil(this.books.length / maxResult);
+    this.paginatePageNumber = Array.from(Array(pages).keys());
+    this.paginateBook = this.books.slice(firstIndex, lastIndex);
   }
 
   onBookSearch(query: string) {
@@ -44,46 +61,29 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.err = "Your Search query is blank";
     } else {
       this.triggerLoader();
-      this.savedQuery = query;
-      this.startIndex = 0;
       this.bookPaginate.resetPaginate();
-      this.handleServiceRequest(query, this.startIndex.toString());
+      this.handleServiceRequest(query);
     }
   }
 
-  @ViewChild("modal", { static: false })
-  modal: ElementRef;
-
-  ngOnInit() {
-    this.triggerLoader();
-    this.handleServiceRequest(this.savedQuery, this.startIndex.toString());
-  }
-
-  ngOnDestroy() {
-    this.booksObs$.unsubscribe();
-  }
-
-  ngAfterViewInit() {}
-
-  private handleServiceRequest(query: string, startIndex: string) {
+  private handleServiceRequest(query: string) {
     const prev = this.books;
 
     this.books = [];
-    this.booksObs$ = this.bookService
-      .getBooksParams(query, startIndex)
-      .subscribe(
-        booksArray => {
-          this.books = booksArray;
-          this.err = "";
-          this.triggerLoader();
-        },
-        error => {
-          this.books = prev;
-          this.modal.nativeElement.click();
-          this.err = error;
-          this.triggerLoader();
-        }
-      );
+    this.booksObs$ = this.bookService.getBooksParams(query).subscribe(
+      booksArray => {
+        this.books = booksArray;
+        this.paginateBookPages(1, 12);
+        this.err = "";
+        this.triggerLoader();
+      },
+      error => {
+        this.books = prev;
+        this.modal.nativeElement.click();
+        this.err = error;
+        this.triggerLoader();
+      }
+    );
   }
 
   triggerLoader() {
