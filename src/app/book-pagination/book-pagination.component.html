@@ -1,10 +1,12 @@
 <nav
   aria-label="Page navigation example"
-  class="d-flex justify-content-center align-items-center mt-5"
+  class="d-flex justify-content-center align-items-center mt-5 paginationNav"
 >
-  <ul class="pagination pagination-lg" (click)="handleOnClick($event)">
+  <ul class="pagination pagination-md" (click)="handleOnClick($event)">
     <li class="page-item">
-      <a class="page-link" href="#" tabindex="-1" (click)="previousPaginate($event)">Previous</a>
+      <a class="page-link" href="#" (click)="previousPaginate($event)"
+        >Previous</a
+      >
     </li>
     <ng-container *ngFor="let page of paginatePage; let first = first">
       <li class="page-item" #paginateNumbers [class.active]="first">
