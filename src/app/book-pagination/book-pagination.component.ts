@@ -29,25 +29,52 @@ export class BookPaginationComponent implements OnInit {
   @Output()
   onPaginateClick = new EventEmitter();
 
-  removeCurrentActive() {
-    const lists: any = Array.from(this.paginateNumbers);
-
+  removeCurrentActive(lists: any) {
     const find = lists.find(element =>
       element.nativeElement.classList.contains("active")
     );
     if (find) {
       find.nativeElement.classList.remove("active");
     }
-    return lists;
+    return find;
   }
 
+  previousPaginate(event) {
+    event.stopPropagation();
+    const lists: any = Array.from(this.paginateNumbers);
+    const find = lists.find(element =>
+      element.nativeElement.classList.contains("active")
+    );
+    const previousPaginateNumber =
+      find.nativeElement.previousElementSibling.firstElementChild;
+    if (Number(previousPaginateNumber.textContent)) {
+      find.nativeElement.classList.remove("active");
+      this.onPaginateClick.emit(previousPaginateNumber);
+    }
+  }
+
+  nextPaginate(event) {
+    event.stopPropagation();
+    const lists: any = Array.from(this.paginateNumbers);
+    const find = lists.find(element =>
+      element.nativeElement.classList.contains("active")
+    );
+    const nextPaginateNumber =
+      find.nativeElement.nextElementSibling.firstElementChild;
+    if (Number(nextPaginateNumber.textContent)) {
+      find.nativeElement.classList.remove("active");
+      this.onPaginateClick.emit(nextPaginateNumber);
+    }
+  }
   handleOnClick(event) {
-    this.removeCurrentActive();
-    this.onPaginateClick.emit(event);
+    const lists: any = Array.from(this.paginateNumbers);
+    this.removeCurrentActive(lists);
+    this.onPaginateClick.emit(event.target);
   }
 
   public resetPaginate() {
-    const lists = this.removeCurrentActive();
+    const lists: any = Array.from(this.paginateNumbers);
+    this.removeCurrentActive(lists);
     lists[0].nativeElement.classList.add("active");
   }
 }

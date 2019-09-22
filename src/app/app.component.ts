@@ -42,9 +42,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.booksObs$.unsubscribe();
   }
 
-  onPaginateClick(event) {
-    const pageNumber = event.target.textContent;
-    event.target.parentNode.classList.add("active");
+  onPaginateClick(element) {
+    const pageNumber = element.textContent;
+    element.parentNode.classList.add("active");
     this.paginateBookPages(pageNumber, 12);
   }
 
