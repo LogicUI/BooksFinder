@@ -1,18 +1,32 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  OnChanges
+} from "@angular/core";
 
 @Component({
-  selector: 'app-search-input',
-  templateUrl: './search-input.component.html',
-  styleUrls: ['./search-input.component.css']
+  selector: "app-search-input",
+  templateUrl: "./search-input.component.html",
+  styleUrls: ["./search-input.component.css"]
 })
-export class SearchInputComponent implements OnInit {
-  inputData = '';
+export class SearchInputComponent implements OnInit, OnChanges {
+  inputData = "";
   constructor() {}
 
   @Output()
   onBookSearched = new EventEmitter<string>();
 
-  ngOnInit() {}
+  @Input()
+  queryHistoryArray: String[];
+
+  ngOnInit() {
+    this.queryHistoryArray = JSON.parse(localStorage.getItem("queries"));
+  }
+
+  ngOnChanges() {}
 
   onInputChange(input: string): void {
     this.inputData = input;
@@ -20,6 +34,6 @@ export class SearchInputComponent implements OnInit {
   onFormSubmit(event) {
     event.preventDefault();
     this.onBookSearched.emit(this.inputData);
-    this.inputData = '';
+    this.inputData = "";
   }
 }

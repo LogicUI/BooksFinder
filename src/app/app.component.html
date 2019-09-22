@@ -5,6 +5,7 @@
     <h1 class="appHeading">Books Finder</h1>
     <app-search-input
       (onBookSearched)="onBookSearch($event)"
+      [queryHistoryArray]="queryHistory"
     ></app-search-input>
   </header>
   <app-book-pagination

@@ -6,7 +6,15 @@
       (input)="onInputChange($event.target.value)"
       [value]="inputData"
       placeholder="Enter a book title"
+      list="browsers"
     />
+    <ng-container *ngIf="queryHistoryArray">
+      <datalist id="browsers">
+        <option *ngFor="let query of queryHistoryArray" [attr.value]="query">
+        </option>
+      </datalist>
+    </ng-container>
+
     <div class="input-group-append">
       <input class="btn btn-primary" type="submit" value="Search" />
     </div>

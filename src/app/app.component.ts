@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   books: Book[];
   paginateBook: Book[];
   paginatePageNumber: number[];
+  queryHistory: String[];
 
   err: string;
   isLoading: boolean = false;
@@ -63,6 +64,21 @@ export class AppComponent implements OnInit, OnDestroy {
       this.triggerLoader();
       this.bookPaginate.resetPaginate();
       this.handleServiceRequest(query);
+      this.setQueryHistory(query);
+    }
+  }
+
+  private setQueryHistory(query: string) {
+    const queryHistory = JSON.parse(localStorage.getItem("queries")) || [];
+    if (!queryHistory.find(history => history === query)) {
+      if (queryHistory.length < 10) {
+        queryHistory.push(query);
+      } else {
+        queryHistory.pop();
+        queryHistory.unshift(query);
+      }
+      localStorage.setItem("queries", JSON.stringify(queryHistory));
+      this.queryHistory = queryHistory;
     }
   }
 
