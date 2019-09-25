@@ -3,7 +3,7 @@
 ## Overview
 
 This app was created for the Chingu Voyage 12 pre work , it pulls data from the 
-[Google Books Api]https://developers.google.com/books/
+[Google Books Api](https://developers.google.com/books/)
 
 **Live Link**: https://booksfinderapp.netlify.com
 
