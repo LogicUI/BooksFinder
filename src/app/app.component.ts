@@ -89,9 +89,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.booksObs$ = this.bookService.getBooksParams(query).subscribe(
       booksArray => {
         this.books = booksArray;
-        this.paginateBookPages(1, 12);
         this.err = "";
         this.triggerLoader();
+        this.paginateBookPages(1, 12);
       },
       error => {
         this.books = prev;
